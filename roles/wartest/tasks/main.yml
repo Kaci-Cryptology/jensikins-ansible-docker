@@ -25,9 +25,8 @@
 - name: Docker login to GitLab registry
   docker_login:
     registry_url: https://registry.gitlab.com
-    username: "amaouchekaci28"
-    password: "glpat-WPvKBSJ2PX-fd1_k4KQz"
-    
+    username: ""
+    password: ""
 
 - name: run container
   docker_container:
