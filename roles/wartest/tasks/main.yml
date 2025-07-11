@@ -1,6 +1,4 @@
 - name: install wartest
-  hosts: all
-  become: yes
 
   vars:
     gitlab_user: "amaouchekaci28"
