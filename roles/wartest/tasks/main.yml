@@ -3,8 +3,8 @@
   become: yes
 
   vars:
-    gitlab_user: "dz6061801"
-    gitlab_token: "{{ lookup('env', 'GITLAB_TOKEN') }}"  # Le token est injecté depuis l'environnement Jenkins
+    gitlab_user: "amaouchekaci28"
+    gitlab_token: "glft-yuPYxLBMptZU1EeYcMsA"  # Le token est injecté depuis l'environnement Jenkins
     image: "{{ image }}"  # Reçu depuis la pipeline Jenkins
 
   tasks:
