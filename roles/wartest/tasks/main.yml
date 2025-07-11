@@ -1,37 +1,48 @@
-- name: install pip
-  apt:
-    name: python3-pip
-    state: present
+- name: install wartest
+  hosts: all
   become: yes
 
-- name: install docker engine
-  apt:
-    name: docker.io
-    state: present
-    update_cache: yes
-  become: yes
+  vars:
+    gitlab_user: "dz6061801"
+    gitlab_token: "{{ lookup('env', 'GITLAB_TOKEN') }}"  # Le token est injecté depuis l'environnement Jenkins
+    image: "{{ image }}"  # Reçu depuis la pipeline Jenkins
 
-- name: start and enable docker service
-  systemd:
-    name: docker
-    state: started
-    enabled: yes
-  become: yes
+  tasks:
 
-- name: pip install docker and docker-compose
-  pip:
-    name:
-      - docker
-      - docker-compose
-    executable: pip3
-  become: yes
+    - name: install pip
+      apt:
+        name: python3-pip
+        state: present
 
-- name: run container
-  docker_container:
-    name: wartest
-    image: "{{ image }}"
-    ports:
-      - "8081:8080"
-    state: started
-  become: yes
+    - name: install docker engine
+      apt:
+        name: docker.io
+        state: present
+        update_cache: yes
 
+    - name: start and enable docker service
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: pip install docker and docker-compose
+      pip:
+        name:
+          - docker
+          - docker-compose
+        executable: pip3
+
+    - name: Docker login to GitLab registry
+      docker_login:
+        registry_url: https://registry.gitlab.com
+        username: "{{ gitlab_user }}"
+        password: "{{ gitlab_token }}"
+
+    - name: run container
+      docker_container:
+        name: wartest
+        image: "{{ image }}"
+        ports:
+          - "8081:8080"
+        state: started
