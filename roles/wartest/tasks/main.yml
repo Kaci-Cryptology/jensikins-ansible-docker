@@ -4,6 +4,20 @@
     state: present
   become: yes
 
+- name: install docker engine
+  apt:
+    name: docker.io
+    state: present
+    update_cache: yes
+  become: yes
+
+- name: start and enable docker service
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+  become: yes
+
 - name: pip install docker and docker-compose
   pip:
     name:
