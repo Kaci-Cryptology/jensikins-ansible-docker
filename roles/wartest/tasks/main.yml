@@ -26,12 +26,13 @@
   docker_login:
     registry_url: https://registry.gitlab.com
     username: "amaouchekaci28"
-    password: "glft-yuPYxLBMptZU1EeYcMsA"
+    password: "glpat-WPvKBSJ2PX-fd1_k4KQz"
+    
 
 - name: run container
   docker_container:
     name: wartest
-    image: "registry.gitlab.com/dz6061801/jenkins:compil-10"
+    image: "registry.gitlab.com/dz6061801/jenkins:compil-12"
     ports:
       - "8081:8080"
     state: started
